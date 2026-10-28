@@ -55,7 +55,6 @@ public partial class MainWindow:Window,INotifyPropertyChanged
  void YearSelected(object s,SelectionChangedEventArgs e){if(!rendering&&YearPicker.SelectedItem is int y){month=new(y,month.Month,1);Render();}}
  void YearKey(object s,KeyEventArgs e){if(e.Key!=Key.Enter)return;if(int.TryParse(YearPicker.Text,out int y)&&y>=Cal.MinYear&&y<=Cal.MaxYear){month=new(y,month.Month,1);Render();}else MessageBox.Show(this,$"Escribe un año entre {Cal.MinYear} y {Cal.MaxYear}.","Año no válido");}
  void Pin(object s,RoutedEventArgs e){Topmost=!Topmost;Render();Save();}void Minimize(object s,RoutedEventArgs e)=>WindowState=WindowState.Minimized;void CloseWindow(object s,RoutedEventArgs e)=>Close();
- void DragHeader(object s,MouseButtonEventArgs e){if(e.OriginalSource is DependencyObject d){while(d!=null){if(d is Button)return;d=VisualTreeHelper.GetParent(d);}}if(e.LeftButton==MouseButtonState.Pressed)DragMove();}
  void Settings(object s,RoutedEventArgs e){var dialog=new SettingsWindow(prefs){Owner=this};if(dialog.ShowDialog()!=true)return;var p=dialog.Result;
  try{using var key=Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run");if(p.AutoStart)key.SetValue("FestivosColombia",$"\"{Environment.ProcessPath}\"");else key.DeleteValue("FestivosColombia",false);}
  catch(Exception ex)when(ex is UnauthorizedAccessException or System.Security.SecurityException or System.IO.IOException){MessageBox.Show(this,"Windows no permitió cambiar el inicio automático. Las demás preferencias se guardarán.","Inicio automático");p.AutoStart=prefs.AutoStart;}

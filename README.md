@@ -6,7 +6,7 @@ Widget nativo de Windows 10/11 x64, C# y WPF sobre .NET 10. Funciona sin conexi�
 
 Extrae el ZIP y abre **FestivosColombia.exe** con doble clic. Conserva el archivo en una carpeta estable si activas el inicio con Windows. El primer arranque puede tardar mientras .NET extrae bibliotecas nativas al directorio temporal. El binario no está firmado: Windows puede mostrar la advertencia de reputación de SmartScreen.
 
-- Arrastra el encabezado para mover la nota. Arrastra cualquier borde o esquina para cambiar el tamaño.
+- Mantén pulsado el botón izquierdo sobre la bandera, el texto Colombia o el espacio libre del encabezado y arrastra para mover la nota. Puedes hacerlo también con la opción siempre encima activada. Arrastra cualquier borde o esquina para cambiar el tamaño.
 - « y » cambian el año; ‹ y › cambian el mes. Selecciona un año o escríbelo y pulsa Entrar (1583–9998).
 - Domingos en rojo; festivos con fondo coral; hoy con borde azul verdoso. El tooltip indica el nombre; pulsa una fecha para ver el detalle completo.
 - La bandera fija o libera la ventana por encima de las demás. − minimiza y × cierra.
