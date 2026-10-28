@@ -1,0 +1,39 @@
+name: Compilar y validar Windows
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Pruebas, publicación y ZIP
+        shell: pwsh
+        run: ./scripts/publish.ps1
+      - name: Prueba de interfaz WPF
+        shell: pwsh
+        run: |
+          dotnet run --project tests/WindowsSmoke -c Release
+          if ($LASTEXITCODE) { throw 'Falló la validación WPF' }
+      - name: Comprobar arranque del ejecutable independiente
+        shell: pwsh
+        run: |
+          $p = Start-Process ./artifacts/publish/FestivosColombia.exe -PassThru
+          Start-Sleep -Seconds 8
+          $p.Refresh()
+          if ($p.HasExited) { throw 'El ejecutable se cerró inesperadamente' }
+          if ($p.MainWindowHandle -eq 0) { Stop-Process -Id $p.Id; throw 'No apareció la ventana' }
+          Stop-Process -Id $p.Id
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FestivosColombia-Windows-x64
+          path: |
+            artifacts/publish/FestivosColombia.exe
+            artifacts/FestivosColombia.zip
+          if-no-files-found: error
